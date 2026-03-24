@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Max's Point Quest</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#0a0a1a 0%,#1a1a3e 40%,#0d1b2a 100%);color:#e0e0e0;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+button{font-family:inherit;color:inherit}
+.c{max-width:480px;margin:0 auto;padding:16px 14px 120px}
+.hd{text-align:center;margin-bottom:24px;padding-top:12px}
+.hd1{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#64748b;font-weight:600}
+.hd2{font-size:32px;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#38bdf8,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hd3{font-size:12px;color:#64748b;margin-top:2px}
+.sc{background:linear-gradient(135deg,rgba(30,30,60,.9),rgba(20,20,50,.9));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 4px 40px rgba(0,0,0,.3)}
+.sr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.st{font-size:44px;font-weight:900;color:#fff;line-height:1}
+.sl{font-size:12px;color:#64748b;margin-top:3px}
+.td{text-align:right}.tdl{font-size:12px;color:#64748b}.tdv{font-size:26px;font-weight:800;color:#38bdf8}
+.xb{background:rgba(255,255,255,.06);border-radius:12px;height:26px;overflow:hidden;position:relative;margin-bottom:10px}
+.xf{height:100%;border-radius:12px;background:linear-gradient(90deg,#38bdf8,#a855f7);transition:width .6s cubic-bezier(.22,1,.36,1);position:relative}
+.xf.done{background:linear-gradient(90deg,#38bdf8,#a855f7,#ec4899,#38bdf8);background-size:200% 100%;animation:shimmer 2s linear infinite}
+.xp{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.sb{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);border-radius:8px;padding:6px 10px;font-size:12px}
+.ws{margin-top:10px;font-size:11px;color:#64748b;background:rgba(255,255,255,.03);border-radius:8px;padding:7px 10px}
+.pb{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#fbbf24;display:flex;align-items:center;gap:8px;cursor:pointer}
+.ppb{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#c084fc;display:flex;align-items:center;gap:8px;cursor:pointer}
+.pc{background:#fbbf24;color:#000;font-weight:800;font-size:12px;padding:2px 8px;border-radius:6px}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tab{flex:1;padding:10px 6px;border-radius:10px;border:none;background:rgba(255,255,255,.05);color:#64748b;font-weight:700;font-size:12px;cursor:pointer}
+.tab.a1{background:rgba(56,189,248,.2);color:#38bdf8}
+.tab.a2{background:rgba(168,85,247,.2);color:#a855f7}
+.tab.a3{background:rgba(16,185,129,.2);color:#10b981}
+.cats{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.cp{padding:7px 11px;border-radius:8px;border:none;background:rgba(255,255,255,.04);color:#64748b;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cp.a{background:rgba(255,255,255,.12);color:#fff}
+.tb{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.04);cursor:pointer;text-align:left;margin-bottom:6px;-webkit-appearance:none;appearance:none;color:inherit}
+.tb:active{transform:scale(.97);background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.3)}
+.te{font-size:26px;line-height:1;flex-shrink:0}
+.ti{flex:1;min-width:0}
+.tl{font-size:14px;font-weight:600;color:#e0e0e0}
+.tn{font-size:10px;color:#38bdf8;margin-top:1px}
+.tp{background:rgba(56,189,248,.15);color:#38bdf8;padding:5px 12px;border-radius:7px;font-size:13px;font-weight:800;white-space:nowrap;flex-shrink:0}
+.mi{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)}
+.mi.u{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.mi.l{opacity:.5}
+.mb{padding:3px 10px;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:1px;flex-shrink:0}
+.ov{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:60px 16px 40px;overflow-y:auto}
+.pov{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pk{width:68px;height:52px;border-radius:12px;border:none;background:rgba(255,255,255,.08);color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pk:active{background:rgba(168,85,247,.3)}
+.mov{position:fixed;inset:0;z-index:1500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.8);backdrop-filter:blur(8px)}
+.mp{background:linear-gradient(135deg,#1e1e3f,#2a1a4e);border:2px solid rgba(168,85,247,.5);border-radius:22px;padding:40px 32px;text-align:center;max-width:360px;box-shadow:0 0 60px rgba(168,85,247,.3)}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:999;padding:10px 24px;border-radius:14px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.4);pointer-events:none;white-space:nowrap;animation:sd .3s ease}
+.toast.e{background:linear-gradient(135deg,#059669,#10b981)}
+.toast.p{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.abtn{padding:8px 14px;border-radius:8px;border:none;background:#059669;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+.dbtn{padding:8px 14px;border-radius:8px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.2);color:#ef4444;font-size:12px;font-weight:700;cursor:pointer}
+.empty{text-align:center;padding:36px;color:#64748b;font-size:13px}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes sd{from{transform:translate(-50%,-20px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+</style>
+</head>
+<body>
+<div class="c" id="app"></div>
+<div id="ov"></div>
+<script>
+// ── STORAGE: works everywhere, falls back to memory ──
+var DB = {};
+var storageOK = false;
+try { localStorage.setItem('__test','1'); localStorage.removeItem('__test'); storageOK = true; } catch(e) {}
+function dbSet(k,v) { DB[k]=v; if(storageOK) try{localStorage.setItem(k,v)}catch(e){} }
+function dbGet(k) { if(storageOK) try{ var v=localStorage.getItem(k); if(v!==null){DB[k]=v;return v} }catch(e){} return DB[k]||null; }
+function dbDel(k) { delete DB[k]; if(storageOK) try{localStorage.removeItem(k)}catch(e){} }
+
+var TARGET = 1500;
+var SK = 'pq4';
+
+var TASKS = {
+  kitchen:{label:"Kitchen & Cooking",icon:"\u{1F373}",items:[
+    {id:"breakfast",label:"Made own breakfast",points:1,emoji:"\u{1F373}"},
+    {id:"meal_prep",label:"Prepped a full meal",points:5,emoji:"\u{1F468}\u200D\u{1F373}"},
+    {id:"dishes_load",label:"Loaded dishwasher",points:1,emoji:"\u{1F37D}\uFE0F"},
+    {id:"dishes_empty",label:"Emptied dishwasher",points:1,emoji:"\u2728"}
+  ]},
+  household:{label:"Household",icon:"\u{1F3E0}",items:[
+    {id:"trash",label:"Took out trash",points:1,emoji:"\u{1F5D1}\uFE0F"},
+    {id:"water_bottles",label:"Brought water bottles in",points:1,emoji:"\u{1F4A7}"},
+    {id:"room_clean",label:"Cleaned room without being asked",points:2,emoji:"\u{1F6CF}\uFE0F"}
+  ]},
+  dogs:{label:"Dog Duties",icon:"\u{1F415}",items:[
+    {id:"walk_30",label:"Dog walk (30 min)",points:10,emoji:"\u{1F415}"},
+    {id:"walk_15",label:"Dog walk (15 min)",points:4,emoji:"\u{1F9AE}"}
+  ]},
+  fitness:{label:"Fitness & Active",icon:"\u{1F4AA}",items:[
+    {id:"workout_30",label:"Workout / gym (30 min)",points:10,emoji:"\u{1F4AA}"},
+    {id:"hike_60",label:"Hike (1 hour)",points:15,emoji:"\u{1F97E}"},
+    {id:"hike_30",label:"Hike / nature walk (30 min)",points:8,emoji:"\u{1F332}"},
+    {id:"skateboard_60",label:"Skateboarding (1 hour)",points:5,emoji:"\u{1F6F9}"},
+    {id:"basketball_30",label:"Basketball (30 min)",points:5,emoji:"\u{1F3C0}"},
+    {id:"jiu_jitsu",label:"Jiu-jitsu class / practice",points:10,emoji:"\u{1F94B}"},
+    {id:"any_sport_15",label:"Any active sport (15 min)",points:5,emoji:"\u26A1"},
+    {id:"fitness_streak_3",label:"3 active days in a row!",points:5,emoji:"\u{1F525}"}
+  ]},
+  personal:{label:"Personal Growth",icon:"\u{1F4DA}",items:[
+    {id:"homework",label:"Homework done (no reminders)",points:5,emoji:"\u{1F4DA}"},
+    {id:"morning_routine",label:"Morning routine on time",points:2,emoji:"\u2600\uFE0F"},
+    {id:"screen_limit",label:"All devices in our room by 8:30 PM",points:2,emoji:"\u{1F3AE}"}
+  ]},
+  bonus:{label:"Bonus XP",icon:"\u{1F31F}",items:[
+    {id:"new_skill",label:"Learned / practiced new skill",points:5,emoji:"\u{1F9E0}"}
+  ]}
+};
+
+var MILES = [
+  {points:100,label:"Choose what's for dinner",emoji:"\u{1F355}",tier:"Bronze",color:"#CD7F32"},
+  {points:250,label:"Movie night \u2014 Max picks",emoji:"\u{1F3AC}",tier:"Bronze",color:"#CD7F32"},
+  {points:500,label:"Stay up 1 hour late (weekend)",emoji:"\u{1F319}",tier:"Silver",color:"#C0C0C0"},
+  {points:750,label:"$15 game store credit",emoji:"\u{1F3AE}",tier:"Silver",color:"#C0C0C0"},
+  {points:1000,label:"Friend sleepover",emoji:"\u{1F3E0}",tier:"Gold",color:"#FFD700"},
+  {points:1250,label:"Choose a family outing",emoji:"\u{1F3AF}",tier:"Gold",color:"#FFD700"},
+  {points:1500,label:"PC UNLOCKED!",emoji:"\u{1F5A5}\uFE0F",tier:"Diamond",color:"#B9F2FF"}
+];
+
+// ── STATE ──
+var S = {total:0,history:[],pending:[],pin:null,tab:'earn',cat:'kitchen',toast:null,toastTimer:null,milePop:null,showApproval:false,showPin:false,pinPurpose:null,pinInput:'',pinStep:1,pinFirst:'',pinError:false,showReset:false};
+
+function save(){dbSet(SK,JSON.stringify({total:S.total,history:S.history,pending:S.pending,pin:S.pin}))}
+function load(){var d=dbGet(SK);if(d){try{var o=JSON.parse(d);S.total=o.total||0;S.history=o.history||[];S.pending=o.pending||[];S.pin=o.pin||null}catch(e){}}}
+
+function today(){return new Date().toDateString()}
+function hash(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0}return ''+h}
+
+function flash(msg,type){
+  S.toast={msg:msg,type:type};
+  if(S.toastTimer)clearTimeout(S.toastTimer);
+  S.toastTimer=setTimeout(function(){S.toast=null;render()},1800);
+  render();
+}
+
+function doRequest(taskId,catKey){
+  var cat=TASKS[catKey];if(!cat)return;
+  var task=null;for(var i=0;i<cat.items.length;i++){if(cat.items[i].id===taskId){task=cat.items[i];break}}
+  if(!task)return;
+  S.pending.push({id:task.id,label:task.label,points:task.points,emoji:task.emoji,date:new Date().toISOString()});
+  save();
+  flash('\u23F3 +'+task.points+' '+task.label,'p');
+}
+
+function doApprove(idx){
+  var item=S.pending[idx];if(!item)return;
+  S.pending.splice(idx,1);
+  var old=S.total;
+  S.total+=item.points;
+  S.history.push(item);
+  save();
+  var crossed=null;
+  for(var i=0;i<MILES.length;i++){if(old<MILES[i].points&&S.total>=MILES[i].points)crossed=MILES[i]}
+  if(crossed){setTimeout(function(){S.milePop=crossed;render()},400)}
+  render();
+}
+
+function doApproveAll(){
+  var old=S.total;var last=null;
+  while(S.pending.length>0){
+    var item=S.pending.shift();
+    var before=S.total;
+    S.total+=item.points;
+    S.history.push(item);
+    for(var i=0;i<MILES.length;i++){if(before<MILES[i].points&&S.total>=MILES[i].points)last=MILES[i]}
+  }
+  save();
+  if(last){setTimeout(function(){S.milePop=last;render()},400)}
+  render();
+}
+
+function doDeny(idx){S.pending.splice(idx,1);save();render()}
+
+function openPin(purpose){S.showPin=true;S.pinPurpose=purpose;S.pinInput='';S.pinError=false;if(purpose==='setup'){S.pinStep=1;S.pinFirst=''}render()}
+
+function pinKey(k){
+  if(k==='del'){S.pinInput=S.pinInput.slice(0,-1);S.pinError=false;render();return}
+  if(S.pinInput.length>=4)return;
+  S.pinInput+=k;S.pinError=false;render();
+  if(S.pinInput.length===4){
+    setTimeout(function(){
+      if(S.pinPurpose==='setup'){
+        if(S.pinStep===1){S.pinFirst=S.pinInput;S.pinInput='';S.pinStep=2;render()}
+        else{
+          if(S.pinInput===S.pinFirst){S.pin=hash(S.pinInput);S.showPin=false;save();flash('\u{1F512} Parent PIN set!','e')}
+          else{S.pinError=true;S.pinInput='';S.pinStep=1;S.pinFirst='';render()}
+        }
+      }else{
+        if(hash(S.pinInput)===S.pin){
+          S.showPin=false;
+          if(S.pinPurpose==='approve'){S.showApproval=true;render()}
+          else if(S.pinPurpose==='reset'){S.total=0;S.history=[];S.pending=[];S.showReset=false;S.showApproval=false;save();flash('\u{1F5D1}\uFE0F All data reset','p')}
+        }else{S.pinError=true;S.pinInput='';render()}
+      }
+    },200);
+  }
+}
+
+function resetAll(){if(S.pin){openPin('reset')}else{S.total=0;S.history=[];S.pending=[];save();flash('Reset','p')}}
+
+// ── RENDER ──
+function render(){
+  var pct=Math.min((S.total/TARGET)*100,100);
+  var tApp=S.history.filter(function(h){return new Date(h.date).toDateString()===today()});
+  var tPen=S.pending.filter(function(h){return new Date(h.date).toDateString()===today()});
+  var tPts=0;for(var i=0;i<tApp.length;i++)tPts+=tApp[i].points;
+  var tAll=tApp.concat(tPen);
+  var wa=new Date();wa.setDate(wa.getDate()-7);
+  var wk=S.history.filter(function(h){return new Date(h.date)>=wa});
+  var wPts=0;for(var i=0;i<wk.length;i++)wPts+=wk[i].points;
+  var dtg=wPts>0?Math.ceil(((TARGET-S.total)/wPts)*7):null;
+  var nextM=null;for(var i=0;i<MILES.length;i++){if(S.total<MILES[i].points){nextM=MILES[i];break}}
+
+  var h='';
+
+  // Header
+  h+='<div class="hd"><div class="hd1">MAX\'S</div><div class="hd2">POINT QUEST</div><div class="hd3">Level up. Earn rewards. Get the PC.</div></div>';
+
+  // Score card
+  h+='<div class="sc"><div class="sr"><div><div class="st">'+S.total.toLocaleString()+'</div><div class="sl">of '+TARGET.toLocaleString()+' points to PC</div></div><div class="td"><div class="tdl">Today</div><div class="tdv">+'+tPts+'</div></div></div>';
+  h+='<div class="xb"><div class="xf'+(pct>=100?' done':'')+'" style="width:'+pct+'%">'+(pct>8?'<span class="xp">'+Math.round(pct)+'%</span>':'')+'</div></div>';
+  if(nextM)h+='<div class="sb">Next: '+nextM.emoji+' '+nextM.label+' \u2014 '+(nextM.points-S.total)+' pts away</div>';
+  if(wPts>0)h+='<div class="ws">\u{1F4CA} This week: '+wPts+' pts from '+wk.length+' tasks'+(dtg>0?' \u00B7 ~'+dtg+' days to PC':'')+'</div>';
+  h+='</div>';
+
+  // PIN setup banner
+  if(!S.pin)h+='<div class="ppb" onclick="openPin(\'setup\')">\u{1F512} <span style="flex:1"><strong>Set up parent PIN</strong> \u2014 required to approve points</span></div>';
+
+  // Pending banner
+  if(S.pending.length>0&&S.pin)h+='<div class="pb" onclick="openPin(\'approve\')">\u23F3 <span style="flex:1"><strong>'+S.pending.length+' point'+(S.pending.length>1?'s':'')+' awaiting approval</strong></span><span class="pc">'+S.pending.length+'</span></div>';
+
+  // Tabs
+  h+='<div class="tabs">';
+  h+='<button class="tab'+(S.tab==='earn'?' a1':'')+'" onclick="S.tab=\'earn\';render()">\u26A1 Earn</button>';
+  h+='<button class="tab'+(S.tab==='miles'?' a2':'')+'" onclick="S.tab=\'miles\';render()">\u{1F3C6} Milestones</button>';
+  h+='<button class="tab'+(S.tab==='hist'?' a3':'')+'" onclick="S.tab=\'hist\';render()">\u{1F4CB} History</button>';
+  h+='</div>';
+
+  // EARN TAB
+  if(S.tab==='earn'){
+    h+='<div class="cats">';
+    var keys=Object.keys(TASKS);
+    for(var i=0;i<keys.length;i++){
+      var k=keys[i],c=TASKS[k];
+      h+='<button class="cp'+(S.cat===k?' a':'')+'" onclick="S.cat=\''+k+'\';render()">'+c.icon+' '+c.label+'</button>';
+    }
+    h+='</div>';
+    var items=TASKS[S.cat].items;
+    for(var i=0;i<items.length;i++){
+      var t=items[i];
+      var cnt=0;for(var j=0;j<tAll.length;j++){if(tAll[j].id===t.id)cnt++}
+      var action=S.pin?'doRequest(\''+t.id+'\',\''+S.cat+'\')':'openPin(\'setup\')';
+      h+='<button class="tb" onclick="'+action+'">';
+      h+='<span class="te">'+t.emoji+'</span>';
+      h+='<div class="ti"><div class="tl">'+t.label+'</div>'+(cnt>0?'<div class="tn">Done '+cnt+'x today</div>':'')+'</div>';
+      h+='<div class="tp">+'+t.points+' pt'+(t.points>1?'s':'')+'</div>';
+      h+='</button>';
+    }
+  }
+
+  // MILESTONES TAB
+  if(S.tab==='miles'){
+    for(var i=0;i<MILES.length;i++){
+      var m=MILES[i],u=S.total>=m.points;
+      h+='<div class="mi'+(u?' u':' l')+'"'+(u?' style="border-color:'+m.color+'44"':'')+'>';
+      h+='<span style="font-size:28px;flex-shrink:0">'+(u?m.emoji:'\u{1F512}')+'</span>';
+      h+='<div style="flex:1"><div style="font-size:14px;font-weight:700;color:'+(u?'#fff':'#64748b')+'">'+m.label+'</div><div style="font-size:11px;color:#64748b;margin-top:2px">'+m.points+' points \u00B7 '+m.tier+'</div></div>';
+      if(u)h+='<span class="mb" style="background:'+m.color+';color:#000">UNLOCKED</span>';
+      h+='</div>';
+    }
+  }
+
+  // HISTORY TAB
+  if(S.tab==='hist'){
+    var all=[];
+    for(var i=0;i<S.history.length;i++)all.push({e:S.history[i],ok:true});
+    for(var i=0;i<S.pending.length;i++)all.push({e:S.pending[i],ok:false});
+    if(all.length===0){h+='<div class="empty">No points earned yet. Start earning! \u{1F680}</div>'}
+    else{
+      var grouped={},order=[];
+      for(var i=all.length-1;i>=0;i--){
+        var d=new Date(all[i].e.date);
+        var key=d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+        if(!grouped[key]){grouped[key]=[];order.push(key)}
+        grouped[key].push(all[i]);
+      }
+      var shown=Math.min(order.length,10);
+      for(var i=0;i<shown;i++){
+        var day=order[i],items=grouped[day];
+        var dp=0;for(var j=0;j<items.length;j++){if(items[j].ok)dp+=items[j].e.points}
+        h+='<div style="margin-bottom:18px"><div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;display:flex;justify-content:space-between"><span>'+day+'</span><span style="color:#38bdf8">+'+dp+' pts</span></div>';
+        for(var j=0;j<items.length;j++){
+          var it=items[j];
+          h+='<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04);opacity:'+(it.ok?'1':'.6')+'"><span>'+it.e.emoji+'</span><span style="flex:1;color:#a0a0c0">'+it.e.label+(it.ok?'':' \u23F3')+'</span><span style="color:#38bdf8;font-weight:700">+'+it.e.points+'</span></div>';
+        }
+        h+='</div>';
+      }
+    }
+    if(S.history.length>0){
+      h+='<div style="text-align:center;margin-top:28px">';
+      if(!S.showReset){h+='<button onclick="S.showReset=true;render()" style="padding:7px 18px;border-radius:7px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.1);color:#ef4444;font-size:11px;cursor:pointer">Reset All Data</button>'}
+      else{h+='<div style="font-size:12px;color:#ef4444;margin-bottom:8px">Are you sure? This can\'t be undone.</div><button onclick="resetAll()" style="padding:7px 18px;border-radius:7px;border:none;background:#ef4444;color:#fff;font-size:11px;font-weight:700;cursor:pointer;margin-right:6px">Yes, reset</button><button onclick="S.showReset=false;render()" style="padding:7px 18px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#64748b;font-size:11px;cursor:pointer">Cancel</button>'}
+      h+='</div>';
+    }
+  }
+
+  document.getElementById('app').innerHTML=h;
+
+  // ── OVERLAYS ──
+  var ov='';
+
+  // Toast
+  if(S.toast)ov+='<div class="toast '+(S.toast.type==='e'?'e':'p')+'">'+S.toast.msg+'</div>';
+
+  // Milestone popup
+  if(S.milePop){
+    var m=S.milePop;
+    ov+='<div class="mov" onclick="S.milePop=null;render()"><div class="mp"><div style="font-size:56px;margin-bottom:12px">'+m.emoji+'</div><div style="font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#a855f7;font-weight:700;margin-bottom:6px">MILESTONE UNLOCKED</div><div style="font-size:24px;font-weight:800;color:#fff;margin-bottom:10px">'+m.label+'</div><div style="font-size:14px;color:#a0a0c0">'+m.points+' points reached!</div><div style="margin-top:20px;padding:8px 20px;background:rgba(168,85,247,.2);border-radius:10px;display:inline-block;font-size:12px;color:#c084fc">Tap to continue</div></div></div>';
+  }
+
+  // PIN modal
+  if(S.showPin){
+    var isSetup=S.pinPurpose==='setup';
+    var title=isSetup?(S.pinStep===1?'Create Parent PIN':'Confirm PIN'):'Enter Parent PIN';
+    var sub=isSetup?(S.pinStep===1?'Choose a 4-digit PIN only parents know':'Enter the same PIN again'):'4-digit parent PIN required';
+    ov+='<div class="pov"><div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:6px">'+title+'</div><div style="font-size:12px;color:#64748b;margin-bottom:24px">'+sub+'</div>';
+    ov+='<div style="display:flex;gap:12px;margin-bottom:28px;'+(S.pinError?'animation:shake .3s':'')+'">';
+    for(var i=0;i<4;i++){
+      var filled=S.pinInput.length>i;
+      var col=filled?(S.pinError?'#ef4444':'#a855f7'):'rgba(255,255,255,.3)';
+      ov+='<div style="width:16px;height:16px;border-radius:50%;border:2px solid '+col+';background:'+(filled?col:'transparent')+';transition:all .2s"></div>';
+    }
+    ov+='</div><div style="display:grid;grid-template-columns:repeat(3,68px);gap:10px">';
+    for(var n=1;n<=9;n++)ov+='<button class="pk" onclick="pinKey(\''+n+'\')">'+n+'</button>';
+    ov+='<button class="pk" style="font-size:14px;color:#64748b" onclick="pinKey(\'del\')">\u232B</button>';
+    ov+='<button class="pk" onclick="pinKey(\'0\')">0</button><div></div></div>';
+    if(S.pinError)ov+='<div style="color:#ef4444;font-size:12px;margin-top:16px;font-weight:600">'+(isSetup?'PINs didn\'t match. Start over.':'Wrong PIN. Try again.')+'</div>';
+    ov+='<button onclick="S.showPin=false;render()" style="color:#64748b;font-size:12px;margin-top:12px;background:none;border:none;cursor:pointer">Cancel</button></div>';
+  }
+
+  // Approval panel
+  if(S.showApproval){
+    ov+='<div class="ov"><div style="font-size:18px;font-weight:800;color:#fbbf24;margin-bottom:6px">\u23F3 Pending Approval</div><div style="font-size:12px;color:#64748b;margin-bottom:20px;text-align:center">Review what Max logged.</div>';
+    if(S.pending.length===0){ov+='<div style="color:#64748b;font-size:13px;margin:20px 0">All caught up!</div>'}
+    else{
+      ov+='<button onclick="doApproveAll()" style="background:#059669;color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:16px">\u2705 Approve All ('+S.pending.length+')</button>';
+      for(var i=0;i<S.pending.length;i++){
+        var it=S.pending[i];
+        var tm=new Date(it.date).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+        ov+='<div style="width:100%;max-width:420px;display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;margin-bottom:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">';
+        ov+='<span style="font-size:24px">'+it.emoji+'</span><div style="flex:1"><div style="font-size:13px;font-weight:600">'+it.label+'</div><div style="font-size:10px;color:#64748b">'+tm+' \u00B7 +'+it.points+' pts</div></div>';
+        ov+='<button class="abtn" onclick="doApprove('+i+')">\u2713</button> <button class="dbtn" onclick="doDeny('+i+')">\u2717</button></div>';
+      }
+    }
+    ov+='<button onclick="S.showApproval=false;render()" style="margin-top:16px;padding:10px 24px;border-radius:10px;border:none;background:rgba(255,255,255,.1);color:#e0e0e0;font-size:13px;font-weight:600;cursor:pointer">Close</button></div>';
+  }
+
+  document.getElementById('ov').innerHTML=ov;
+}
+
+// ── INIT ──
+load();
+render();
+</script>
+</body>
+</html>
